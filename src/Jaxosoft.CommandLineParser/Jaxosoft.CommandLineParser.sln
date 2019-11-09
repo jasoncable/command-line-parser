@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29424.173
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jaxosoft.CommandLineParser", "Jaxosoft.CommandLineParser\Jaxosoft.CommandLineParser.csproj", "{E61566D1-E2CC-4E88-9469-8029FBD1EFDD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jaxosoft.CommandLineParser.UnitTests", "Jaxosoft.CommandLineParser.UnitTests\Jaxosoft.CommandLineParser.UnitTests.csproj", "{BA5276E4-17A4-4F10-9155-789E224E0D12}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E61566D1-E2CC-4E88-9469-8029FBD1EFDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E61566D1-E2CC-4E88-9469-8029FBD1EFDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E61566D1-E2CC-4E88-9469-8029FBD1EFDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E61566D1-E2CC-4E88-9469-8029FBD1EFDD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA5276E4-17A4-4F10-9155-789E224E0D12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA5276E4-17A4-4F10-9155-789E224E0D12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA5276E4-17A4-4F10-9155-789E224E0D12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA5276E4-17A4-4F10-9155-789E224E0D12}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9260595F-F52C-4772-A2B6-0019BF117C4B}
+	EndGlobalSection
+EndGlobal
