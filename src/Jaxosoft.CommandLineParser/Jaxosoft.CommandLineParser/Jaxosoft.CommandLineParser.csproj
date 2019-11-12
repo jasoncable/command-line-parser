@@ -11,6 +11,11 @@
     <PackageLicenseExpression></PackageLicenseExpression>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageProjectUrl>https://jasoncable.github.io/command-line-parser/</PackageProjectUrl>
+    <RepositoryType>github</RepositoryType>
+    <RepositoryUrl>https://github.com/jasoncable/command-line-parser</RepositoryUrl>
+    <PackageTags>dotnetcore, commandline, command-line, parser, .netcore</PackageTags>
+    <PackageIconUrl>https://github.com/jasoncable/command-line-parser/images/icon-square.svg</PackageIconUrl>
   </PropertyGroup>
 
   <ItemGroup>
