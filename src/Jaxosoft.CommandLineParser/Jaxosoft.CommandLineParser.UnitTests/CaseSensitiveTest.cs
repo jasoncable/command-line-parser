@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Dynamic;
 using FluentAssertions;
 
-
 namespace Jaxosoft.CommandLineParser.UnitTests
 {
     public class CaseSensitiveTest

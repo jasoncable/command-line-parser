@@ -31,6 +31,7 @@ namespace Jaxosoft.CommandLineParser
         private List<string>? _additionalRawArguments;
         private CultureInfo? _culture;
         private StringComparer _stringComparer;
+        private List<string>? _positionalParameters;
 
         public Parser()
         {
@@ -138,6 +139,11 @@ namespace Jaxosoft.CommandLineParser
                 if (groups["argType"].Success && groups["argType"].Value.Trim() == "--")
                 {
                     _additionalRawArguments = new List<string>(args.Length - i);
+                    if (Config.SupportPosititionalParameters && _positionalParameters == null)
+                    {
+                        _positionalParameters = new List<string>(args.Length - i);
+                    }
+                    
                     if (i == args.Length - 1)
                     {
                         _additionalRawArguments = new List<string>();
@@ -147,6 +153,8 @@ namespace Jaxosoft.CommandLineParser
                         for (int j = i + 1; j < args.Length; j++)
                         {
                             _additionalRawArguments.Add(args[j]);
+                            if (Config.SupportPosititionalParameters && _positionalParameters != null)
+                                _positionalParameters.Add(args[j]);
                         }
                         break;
                     }
@@ -231,6 +239,28 @@ namespace Jaxosoft.CommandLineParser
                     }
                 }
             }
+
+            // process positional arguments
+            if (Config.SupportPosititionalParameters)
+            {
+                int positionalArgCount = 0;
+                for(int k = args.Length - 1; k >= 0; k--)
+                {
+                    if (!IsArg(args[k]))
+                        positionalArgCount++;
+                    else
+                        break;
+                }
+
+                if(_positionalParameters == null)
+                {
+                    _positionalParameters = new List<string>();
+                    for(int l = args.Length - positionalArgCount; l < args.Length; l++)
+                    {
+                        _positionalParameters.Add(String.IsNullOrWhiteSpace(args[l]) ? String.Empty : args[l].Trim());
+                    }
+                }
+            }
         }
 
         public dynamic AsDynamicArgsBag()
@@ -268,6 +298,29 @@ namespace Jaxosoft.CommandLineParser
                     if(aliasDynamicMemberIdentifier != dynamicMemberIdentifier && aliasDynamicMemberIdentifier != dynamicMemberName && aliasDynamicMemberIdentifier != aliasDynamicMemberName)
                         dynamo.TryAdd(aliasDynamicMemberIdentifier, alias.Value.ComputedValue);
                 }
+            }
+
+            if(Config.SupportPosititionalParameters && _positionalParameters != null && _positionalParameters.Count > 0)
+            {
+                dynamo.TryAdd(Constants.FirstPositionalParameter, _positionalParameters[0]);
+
+                if(_positionalParameters.Count > 1)
+                    dynamo.TryAdd(Constants.LastPositionalParmeter, _positionalParameters[_positionalParameters.Count - 1]);
+                else
+                    dynamo.TryAdd(Constants.LastPositionalParmeter, null);
+
+                for(int m = 0; m < _positionalParameters.Count; m++)
+                {
+                    dynamo.TryAdd($"{Constants.PositionalParameterPrefix}{m}", _positionalParameters[m]);
+                }
+
+                dynamo.TryAdd(Constants.PositionalParameters, _positionalParameters);
+            }
+
+            if(Config.SupportPosititionalParameters && (_positionalParameters == null || _positionalParameters.Count == 0))
+            {
+                dynamo.TryAdd(Constants.FirstPositionalParameter, null);
+                dynamo.TryAdd(Constants.LastPositionalParmeter, null);
             }
 
             _instanceBag = dynamo;
@@ -308,6 +361,23 @@ namespace Jaxosoft.CommandLineParser
                 }
             }
 
+            if (Config.SupportPosititionalParameters && _positionalParameters != null && _positionalParameters.Count > 0)
+            {
+                returnData.Add(Constants.FirstPositionalParameter, _positionalParameters[0]);
+
+                if (_positionalParameters.Count > 1)
+                {
+                    returnData.Add(Constants.LastPositionalParmeter, _positionalParameters[_positionalParameters.Count - 1]);
+                }
+
+                returnData.Add(Constants.PositionalParameters, _positionalParameters);
+
+                for (int n = 0; n < _positionalParameters.Count; n++)
+                {
+                    returnData.Add($"{Constants.PositionalParameterPrefix}{n}", _positionalParameters[n]);
+                }
+            }
+
             _instanceStringObjectDictionary = returnData;
             return _instanceStringObjectDictionary;
         }
@@ -338,6 +408,21 @@ namespace Jaxosoft.CommandLineParser
                     if (alias.Alias != item.Key)
                         returnData.TryAdd(alias.Alias, alias.Value.ComputedStringValue);
                 }
+            }
+
+            if(Config.SupportPosititionalParameters && _positionalParameters != null && _positionalParameters.Count > 0)
+            {
+                returnData.Add(Constants.FirstPositionalParameter, _positionalParameters[0]);
+
+                if(_positionalParameters.Count > 1)
+                    returnData.Add(Constants.LastPositionalParmeter, _positionalParameters[_positionalParameters.Count - 1]);
+
+                for(int n = 0; n < _positionalParameters.Count; n++)
+                {
+                    returnData.Add($"{Constants.PositionalParameterPrefix}{n}", _positionalParameters[n]);
+                }
+
+                returnData.Add(Constants.PositionalParameters, String.Join(", ", _positionalParameters));
             }
 
             _instanceStringStringDictionary = returnData;

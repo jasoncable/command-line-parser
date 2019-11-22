@@ -13,6 +13,8 @@ namespace Jaxosoft.CommandLineParser
         public bool InvariantComparisons { get; set; } = false;
         public bool UseCurrentCulture { get; set; } = false;
         public bool SupportMultilineArguments { get; set; } = false;
+        public bool SupportPosititionalParameters { get; set; } = false;
+        public int NumberOfRequiredPositionalParameters { get; set; } = 0;
 
         public List<CommandLineArgumentDefinition> Arguments { get; set; } = new List<CommandLineArgumentDefinition>();
 
