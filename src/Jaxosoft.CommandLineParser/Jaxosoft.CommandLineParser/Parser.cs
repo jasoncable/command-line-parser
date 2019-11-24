@@ -563,5 +563,10 @@ namespace Jaxosoft.CommandLineParser
             }
             return returnValue;
         }
+
+        public static IParserConfigurator Create()
+        {
+            return new ConfigurationModel();
+        }
     }
 }
